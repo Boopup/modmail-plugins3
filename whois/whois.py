@@ -10,7 +10,7 @@ class WhoisPlugin(commands.Cog):
     async def whois_user(self, ctx, *, username):
         # Step 1: Call Roblox API's search endpoint to find the user ID
         async with aiohttp.ClientSession() as session:
-            search_url = f"https://users.roblox.com/v1/users/search?keyword={username}&limit=1"
+            search_url = f"https://users.roblox.com/v1/users/search?keyword={username}&limit=10"
             async with session.get(search_url) as response:
                 if response.status != 200:
                     await ctx.send("Failed to retrieve data from Roblox API.")
