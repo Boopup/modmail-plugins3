@@ -78,9 +78,11 @@ class WhoisPlugin(commands.Cog):
         # Step 4: Construct the embed
         description = user_profile["description"] or "Nothing is currently in this user's description."
         created_at = datetime.fromisoformat(user_profile["created"].replace('Z', '+00:00'))
+        verified = user_profile.get("hasVerifiedBadge", False)
+        title_prefix = "<:_:1066389333025751080> " if verified else ""
 
         embed = discord.Embed(
-            title=f"{user_profile['name']}'s Profile",
+            title=f"{title_prefix}{user_profile['name']}'s Profile",
             url=f"https://www.roblox.com/users/{user_id}/profile",
             description=f"```{description}```",
             color=discord.Color.blue()
