@@ -2,7 +2,7 @@ import discord
 from discord.ext import commands
 import aiohttp
 
-class WhoisPlugin(commands.Cog):
+class RobloxCommands(commands.Cog, name="Roblox Commands"):
     def __init__(self, bot):
         self.bot = bot
 
@@ -35,7 +35,7 @@ class WhoisPlugin(commands.Cog):
                 data = await response.json()
                 return data['data'][0]['imageUrl'] if 'data' in data and len(data['data']) > 0 else None
 
-    @commands.command(name="whois")
+    @commands.command(name="whois", help="Find information about a Roblox user")
     async def whois(self, ctx, username: str):
         user_id, roblox_username = await self.get_roblox_user_id(username)
         if not user_id:
@@ -89,4 +89,4 @@ class WhoisPlugin(commands.Cog):
         await ctx.send(embed=embed)
 
 async def setup(bot):
-    await bot.add_cog(WhoisPlugin(bot))
+    await bot.add_cog(RobloxCommands(bot))
