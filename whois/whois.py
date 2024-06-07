@@ -1,6 +1,7 @@
 import discord
 from discord.ext import commands
 import aiohttp
+from datetime import datetime
 
 class WhoisPlugin(commands.Cog):
     def __init__(self, bot):
@@ -43,12 +44,17 @@ class WhoisPlugin(commands.Cog):
                 user_profile = await response.json()
 
         # Step 3: Construct the embed
+        description = user_profile["description"] or "Nothing is currently in this user's description."
+        created_at = datetime.fromisoformat(user_profile["created"].replace('Z', '+00:00'))
+
         embed = discord.Embed(
             title=f"{user_profile['name']}'s Profile",
-            description=f"```{user_profile['description']}```",
+            description=f"```{description}```",
             color=discord.Color.blue()
         )
-        embed.add_field(name="Created", value=user_profile["created"], inline=False)
+        embed.add_field(name="Display Name", value=user_profile.get("displayName", "N/A"), inline=False)
+        embed.add_field(name="Created", value=created_at.strftime('%Y-%m-%d %H:%M:%S'), inline=False)
+        embed.set_thumbnail(url=f"https://roblox-avatar.eryn.io/{user_id}?format=webp")
 
         # Send the embed
         await ctx.send(embed=embed)
