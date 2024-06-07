@@ -50,7 +50,7 @@ class RobloxCommands(commands.Cog, name="Roblox Commands"):
                 user_data = await response.json()
 
         description = user_data.get("description", "Nothing is currently in this user's description.")
-        created = discord.utils.format_dt(discord.utils.snowflake_time(int(user_data["created"].split("-")[0])), style='R')
+        created = user_data.get("created", "Unknown")
         display_name = user_data.get("displayName", roblox_username)
         is_verified = user_data.get("hasVerifiedBadge", False)
         verified_emoji = "<:_:1066389333025751080>" if is_verified else ""
@@ -59,16 +59,17 @@ class RobloxCommands(commands.Cog, name="Roblox Commands"):
 
         embed = discord.Embed(
             title=f"{verified_emoji} {roblox_username}'s Profile",
-            description=f"> **Description:**\n```\n{description}\n```\n> **Created:** {created}\n",
+            description=f"> **Description:**\n```\n{description}\n```\n",
             url=f"https://www.roblox.com/users/{user_id}/profile",
             color=discord.Color.blue()
         )
 
         if headshot_url:
-            embed.set_author(name=roblox_username, icon_url=headshot_url)
+            embed.set_thumbnail(url=headshot_url)
 
-        embed.add_field(name="User ID", value=user_id, inline=True)
-        embed.add_field(name="Display Name", value=display_name, inline=True)
+        embed.add_field(name="User ID", value=user_id, inline=False)
+        embed.add_field(name="Display Name", value=display_name, inline=False)
+        embed.add_field(name="Created", value=created, inline=False)
 
         async with aiohttp.ClientSession() as session:
             async with session.get(f"https://friends.roblox.com/v1/users/{user_id}/followers/count") as response:
