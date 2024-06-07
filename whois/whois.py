@@ -44,6 +44,15 @@ class WhoisPlugin(commands.Cog):
                 data = await response.json()
                 return data.get("count", 0)
 
+    async def get_friends_count(self, user_id):
+        async with aiohttp.ClientSession() as session:
+            url = f"https://friends.roblox.com/v1/users/{user_id}/friends/count"
+            async with session.get(url) as response:
+                if response.status != 200:
+                    return None
+                data = await response.json()
+                return data.get("count", 0)
+
     @commands.command(name="whois")
     async def whois_user(self, ctx, *, username):
         # Step 1: Get Roblox user ID from username
@@ -61,9 +70,10 @@ class WhoisPlugin(commands.Cog):
                     return
                 user_profile = await response.json()
 
-        # Step 3: Get followers and following counts
+        # Step 3: Get followers, following, and friends counts
         following_count = await self.get_following_count(user_id)
         followers_count = await self.get_followers_count(user_id)
+        friends_count = await self.get_friends_count(user_id)
 
         # Step 4: Construct the embed
         description = user_profile["description"] or "Nothing is currently in this user's description."
@@ -71,6 +81,7 @@ class WhoisPlugin(commands.Cog):
 
         embed = discord.Embed(
             title=f"{user_profile['name']}'s Profile",
+            url=f"https://www.roblox.com/users/{user_id}/profile",
             description=f"```{description}```",
             color=discord.Color.blue()
         )
@@ -78,6 +89,7 @@ class WhoisPlugin(commands.Cog):
         embed.add_field(name="Created", value=created_at.strftime('%Y-%m-%d %H:%M:%S'), inline=False)
         embed.add_field(name="Following", value=following_count, inline=True)
         embed.add_field(name="Followers", value=followers_count, inline=True)
+        embed.add_field(name="Friends", value=friends_count, inline=True)
         embed.set_thumbnail(url=f"https://roblox-avatar.eryn.io/{user_id}?format=webp")
 
         # Send the embed
