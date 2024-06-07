@@ -88,6 +88,7 @@ class WhoisPlugin(commands.Cog):
             color=discord.Color.blue()
         )
         embed.add_field(name="Display Name", value=user_profile.get("displayName", "N/A"), inline=False)
+        embed.add_field(name="User ID", value=user_id, inline=False)
         embed.add_field(name="Created", value=created_at.strftime('%Y-%m-%d %H:%M:%S'), inline=False)
         embed.add_field(name="Following", value=following_count, inline=True)
         embed.add_field(name="Followers", value=followers_count, inline=True)
