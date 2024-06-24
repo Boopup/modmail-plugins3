@@ -12,7 +12,7 @@ class RobloxCommands(commands.Cog, name="Roblox Commands"):
                 url = 'https://users.roblox.com/v1/usernames/users'
                 payload = {
                     "usernames": [username],
-                    "excludeBannedUsers": True
+                    "excludeBannedUsers": False
                 }
                 async with session.post(url, json=payload) as response:
                     if response.status != 200:
