@@ -6,8 +6,8 @@ class Affiliate(commands.Cog):
     def __init__(self, bot):
         self.bot = bot
 
-    @commands.command()
-    async def announce(self, ctx):
+    @commands.command(name="affiliate_announce")
+    async def affiliate_announce(self, ctx):
         role_id = 1158167769523687494
         channel_id = 1003340995980705952
 
