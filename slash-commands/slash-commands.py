@@ -11,13 +11,13 @@ class AutoSlashCommands(commands.Cog):
         # Register all existing commands as slash commands
         for command in self.bot.commands:
             if not command.hidden:  # Skip hidden commands
-                self.register_as_slash(command)
+                await self.register_as_slash(command)
 
         # Add the command group to the bot
         self.bot.tree.add_command(self.command_group)
         await self.bot.tree.sync()
 
-    def register_as_slash(self, command):
+    async def register_as_slash(self, command):
         @self.command_group.command(name=command.name, description=command.help or "No description provided.")
         async def _slash_command(interaction: discord.Interaction, *args):
             await interaction.response.defer()
