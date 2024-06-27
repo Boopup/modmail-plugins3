@@ -15,7 +15,7 @@ class AutoSlashCommands(commands.Cog):
         await self.bot.tree.sync()
 
     async def register_as_slash(self, command):
-        async def _slash_command(interaction: discord.Interaction, *args):
+        async def _slash_command(interaction: discord.Interaction, *args: str):
             await interaction.response.defer()
             # Create a fake context to pass to the original command
             fake_ctx = await self.bot.get_context(interaction)
