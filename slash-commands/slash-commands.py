@@ -14,16 +14,16 @@ class AutoSlashCommands(commands.Cog):
                 self.register_as_slash(command)
 
         # Add the command group to the bot
-        self.bot.add_application_command(self.command_group)
+        self.bot.tree.add_command(self.command_group)
+        await self.bot.tree.sync()
 
     def register_as_slash(self, command):
         @self.command_group.command(name=command.name, description=command.help or "No description provided.")
-        async def _slash_command(ctx: discord.ApplicationContext, *args):
-            await ctx.defer()
+        async def _slash_command(interaction: discord.Interaction, *args):
+            await interaction.response.defer()
             # Create a fake context to pass to the original command
-            fake_ctx = await self.bot.get_context(ctx.interaction)
+            fake_ctx = await self.bot.get_context(interaction)
             fake_ctx.command = command
-            fake_ctx.interaction = ctx.interaction  # Attach the interaction to the context
             await command.callback(fake_ctx, *args)
 
     @commands.Cog.listener()
