@@ -14,7 +14,7 @@ class AutoSlashCommands(commands.Cog):
         # Sync the command tree to ensure all commands are registered
         await self.bot.tree.sync()
 
-    async def register_as_slash(self, command):
+    async def register_as_slash(self, command: commands.Command):
         async def _slash_command(interaction: discord.Interaction, *args: str):
             await interaction.response.defer()
             # Create a fake context to pass to the original command
