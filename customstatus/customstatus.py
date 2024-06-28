@@ -8,9 +8,12 @@ class CustomActivity(commands.Cog):
     @commands.command(name='customactivity')
     @commands.has_permissions(administrator=True)
     async def set_custom_activity(self, ctx, emoji: str, *, activity_name: str):
-        activity = discord.CustomActivity(name=activity_name, emoji=emoji)
-        await self.bot.change_presence(activity=activity)
-        await ctx.send(f'Set custom activity to {emoji} {activity_name}')
+        try:
+            activity = discord.CustomActivity(name=activity_name, emoji=emoji)
+            await self.bot.change_presence(activity=activity)
+            await ctx.send(f'Set custom activity to {emoji} {activity_name}')
+        except Exception as e:
+            await ctx.send(f'Error setting custom activity: {e}')
 
     @set_custom_activity.error
     async def custom_activity_error(self, ctx, error):
