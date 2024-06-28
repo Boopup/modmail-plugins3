@@ -7,13 +7,13 @@ class CustomActivity(commands.Cog):
 
     @commands.command(name='customactivity')
     @commands.has_permissions(administrator=True)
-    async def set_custom_activity(self, ctx, emoji: str, *, activity_name: str):
+    async def set_custom_activity(self, ctx, activity_name: str):
         try:
             # Ensure emoji is correctly formatted with Unicode
             emoji = f'{emoji.strip()}'
-            activity = discord.CustomActivity(name=activity_name, emoji=emoji)
+            activity = discord.CustomActivity(name=activity_name)
             await self.bot.change_presence(activity=activity)
-            await ctx.send(f'Set custom activity to {emoji} {activity_name}')
+            await ctx.send(f'Set custom activity to {activity_name}')
         except Exception as e:
             await ctx.send(f'Error setting custom activity: {e}')
 
