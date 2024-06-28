@@ -17,5 +17,5 @@ class CustomActivity(commands.Cog):
         if isinstance(error, commands.MissingPermissions):
             await ctx.send("You need to be an administrator to use this command.")
 
-def setup(bot):
-    bot.add_cog(CustomActivity(bot))
+async def setup(bot):
+    await bot.add_cog(CustomActivity(bot))
