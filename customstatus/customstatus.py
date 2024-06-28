@@ -52,5 +52,5 @@ class CustomStatus(commands.Cog):
         if isinstance(error, commands.MissingPermissions):
             await ctx.send("You do not have permission to use this command.")
 
-def setup(bot):
-    bot.add_cog(CustomStatus(bot))
+async def setup(bot):
+    await bot.add_cog(CustomStatus(bot))
