@@ -2,6 +2,7 @@
 
 import discord
 from discord.ext import commands, tasks
+import random
 
 class CustomStatus(commands.Cog):
     def __init__(self, bot):
@@ -53,4 +54,4 @@ class CustomStatus(commands.Cog):
             await ctx.send("You do not have permission to use this command.")
 
 async def setup(bot):
-    await bot.add_cog(CustomStatus(bot))
+   await bot.add_cog(CustomStatus(bot))
