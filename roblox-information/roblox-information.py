@@ -12,7 +12,7 @@ class RobloxCommands(commands.Cog, name="Roblox Commands"):
                 url = 'https://users.roblox.com/v1/usernames/users'
                 payload = {
                     "usernames": [username],
-                    "excludeBannedUsers": False
+                    "excludeBannedUsers": True
                 }
                 async with session.post(url, json=payload) as response:
                     if response.status != 200:
@@ -61,7 +61,6 @@ class RobloxCommands(commands.Cog, name="Roblox Commands"):
             title=f"{verified_emoji} {roblox_username}'s Profile",
             description=f"> **Description:**\n```\n{description}\n```\n",
             url=f"https://www.roblox.com/users/{user_id}/profile",
-            color=discord.Color.blue()
         )
 
         if headshot_url:
