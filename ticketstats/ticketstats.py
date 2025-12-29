@@ -34,7 +34,7 @@ class TicketStats(commands.Cog):
     async def dm_status(self):
         if self.bot.config["dm_disabled"] == DMDisabled.ALL_THREADS:
             if self.activity:
-                await self.bot.change_presence(activity=discord.Activity(type=discord.ActivityType.watching, name=f"Tickets Closed"), , status=discord.Status.dnd)
+                await self.bot.change_presence(activity=discord.Activity(type=discord.ActivityType.watching, name=f"Tickets Closed"), status=discord.Status.dnd)
             return "All Tickets Disabled"
         elif self.bot.config["dm_disabled"] == DMDisabled.NEW_THREADS:
             if self.activity:
